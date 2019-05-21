@@ -26,5 +26,8 @@ func ParseConfig(path string) (Config, error) {
 	if err := candiedyaml.NewDecoder(file).Decode(&decodedConfig); err != nil {
 		return Config{}, err
 	}
+	if os.Getenv("ROUTE_SERVICE_URL") != "" {
+		decodedConfig.BrokerConfiguration.RouteServiceURL = os.Getenv("ROUTE_SERVICE_URL")
+	}
 	return decodedConfig, nil
 }
